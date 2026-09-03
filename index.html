@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de DHSV</title>
+    <link rel="icon" type="image/png" href="DHSV.png">
+    <link rel="apple-touch-icon" href="DHSV.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Teste DHSV">
+    <style>
+        :root {
+            --primary-color: #1b4332;
+            --primary-hover: #2d6a4f;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2b2b2b;
+            --border-color: #cccccc;
+            --whatsapp-color: #25d366;
+            --whatsapp-hover: #128c7e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0 10px 0;
+            font-size: 1rem;
+            background-color: #e8f5e9;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="time"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        /* Força a exibição visual em maiúsculas no input */
+        #nomePoco {
+            text-transform: uppercase;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            background-color: #fafafa;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .btn-container {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: var(--whatsapp-hover);
+        }
+
+        .btn-copy {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-copy:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 480px) {
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📋 Formulário - Teste de DHSV</h2>
+    <form id="dhsvForm">
+
+        <div class="form-group">
+            <label for="nomePoco">Nome / Sigla do Poço:</label>
+            <input type="text" id="nomePoco" placeholder="Ex: BE-0001, ASB-0002" onblur="formatarNomePoco(this)" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="data">Data:</label>
+            <input type="date" id="data" required>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="inicio">Início do Teste:</label>
+                <input type="time" id="inicio" required>
+            </div>
+            <div class="form-group">
+                <label for="termino">Término do Teste:</label>
+                <input type="time" id="termino" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="statusPoco">Status do Poço:</label>
+            <input type="text" id="statusPoco" placeholder="Ex: Produzindo, Fechado..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="tipoFluido">Tipo de Fluido:</label>
+            <select id="tipoFluido" required>
+                <option value="">Selecione...</option>
+                <option value="Gás">Gás</option>
+                <option value="Líquido">Líquido</option>
+                <option value="Gás e Líquido">Gás e Líquido</option>
+            </select>
+        </div>
+
+        <div class="section-title">Pressão da Cabeça / Anulares Inicial</div>
+        
+        <div class="form-group">
+            <label for="pressaoColuna">Pressão da Coluna (PSI):</label>
+            <input type="number" id="pressaoColuna" placeholder="0" required>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="pressaoAnularA">Anular A (PSI):</label>
+                <input type="number" id="pressaoAnularA" placeholder="0" required>
+            </div>
+            <div class="form-group">
+                <label for="pressaoAnularB">Anular B (PSI):</label>
+                <input type="number" id="pressaoAnularB" placeholder="Opcional">
+            </div>
+        </div>
+
+        <div class="section-title">Dados do Teste DHSV</div>
+
+        <div class="form-group">
+            <label for="pressaoLinhaDHSV">Pressão da Linha da DHSV (PSI):</label>
+            <input type="number" id="pressaoLinhaDHSV" placeholder="0" required>
+        </div>
+
+        <div class="form-group">
+            <label for="estabilizacaoMin">Estabilização (Minutos):</label>
+           <input type="text" id="estabilizacaoMin" placeholder="Ex: Sem variação / +5 psi" required>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="recirculacao" checked>
+            <label for="recirculacao">Abrir recirculação da bomba (Fechamento DHSV - Pressão bomba/linha 0 psi)</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="drenarTrecho" checked>
+            <label for="drenarTrecho">Drenar trecho entre a DHSV e os bloqueios (0 psi)</label>
+        </div>
+
+        <div class="form-group">
+            <label for="acrescinopressao">Acréscimo de pressão (mínimo 30 min):</label>
+            <input type="text" id="acrescinopressao" placeholder="Ex: Sem variação / +5 psi" required>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="pressurizarLinha" checked>
+            <label for="pressurizarLinha">Pressurizar linha da DHSV lentamente até equalização</label>
+        </div>
+
+        <div class="form-group">
+            <label for="pressaoBomba">Valor da Pressão na Bomba (PSI):</label>
+            <input type="number" id="pressaoBomba" placeholder="0" required>
+        </div>
+
+        <div class="section-title">Equipamento / Calibração</div>
+
+        <div class="form-group">
+            <label for="codigoTag">Código / Tag:</label>
+            <input type="text" id="codigoTag" placeholder="Ex: TAG-1234" required>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="dataCalibracao">Data Calibração:</label>
+                <input type="date" id="dataCalibracao" required>
+            </div>
+            <div class="form-group">
+                <label for="vencimentoCalibracao">Vencimento Calibração:</label>
+                <input type="date" id="vencimentoCalibracao" required>
+            </div>
+        </div>
+
+        <div class="section-title">Resultados</div>
+
+        <div class="form-group">
+            <label for="resultadoTeste">Resultado do Teste:</label>
+            <select id="resultadoTeste" required>
+                <option value="DHSV Conforme ✅">DHSV Conforme ✅</option>
+                <option value="DHSV Não Conforme ❌">DHSV Não Conforme ❌</option>
+            </select>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="checklist" checked>
+            <label for="checklist">Check-list respondido e devolvido ✅</label>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp()">📲 Enviar via WhatsApp</button>
+            <button type="button" class="btn-copy" onclick="copiarTexto()">📋 Copiar Texto Formatado</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    // Função para formatar o nome do poço (MAIÚSCULA e hífen entre letras e números)
+    function formatarNomePocoInput(valor) {
+        if (!valor) return '';
+        
+        let texto = valor.toUpperCase().trim();
+        texto = texto.replace(/[\s-]+/g, ''); // Remove espaços ou hifens duplicados temporariamente
+
+        // Separa a parte de letras da parte numérica (Ex: BE0001 -> BE-0001)
+        const match = texto.match(/^([A-Z]+)(\d+)$/);
+        
+        if (match) {
+            return `${match[1]}-${match[2]}`;
+        }
+        
+        return valor.toUpperCase().trim().replace(/\s+/g, '-');
+    }
+
+    function formatarNomePoco(input) {
+        input.value = formatarNomePocoInput(input.value);
+    }
+
+    function formatarDataBR(dataISO) {
+        if (!dataISO) return '';
+        const partes = dataISO.split('-');
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    function gerarTextoMensagem() {
+        const inputPoco = document.getElementById('nomePoco');
+        // Garante a formatação antes do envio
+        const nomePoco = formatarNomePocoInput(inputPoco.value);
+        inputPoco.value = nomePoco;
+
+        const data = formatarDataBR(document.getElementById('data').value);
+        const inicio = document.getElementById('inicio').value;
+        const termino = document.getElementById('termino').value;
+        const statusPoco = document.getElementById('statusPoco').value;
+        const tipoFluido = document.getElementById('tipoFluido').value;
+        
+        const pressaoColuna = document.getElementById('pressaoColuna').value;
+        const pressaoAnularA = document.getElementById('pressaoAnularA').value;
+        const pressaoAnularB = document.getElementById('pressaoAnularB').value;
+        
+        const pressaoLinhaDHSV = document.getElementById('pressaoLinhaDHSV').value;
+        const estabilizacaoMin = document.getElementById('estabilizacaoMin').value;
+        
+        const recirculacao = document.getElementById('recirculacao').checked ? 'Sim (Fechamento da DHSV) - Sim / Pressão da bomba 0 psi / Pressão da linha 0' : 'Não';
+        const drenarTrecho = document.getElementById('drenarTrecho').checked ? 'Sim - 0 psi' : 'Não';
+        
+        const acrescinopressao = document.getElementById('acrescinopressao').value;
+        const pressurizarLinha = document.getElementById('pressurizarLinha').checked ? 'Sim' : 'Não';
+        
+        const pressaoBomba = document.getElementById('pressaoBomba').value;
+        const codigoTag = document.getElementById('codigoTag').value;
+        const dataCalibracao = formatarDataBR(document.getElementById('dataCalibracao').value);
+        const vencimentoCalibracao = formatarDataBR(document.getElementById('vencimentoCalibracao').value);
+        
+        const resultadoTeste = document.getElementById('resultadoTeste').value;
+        const checklist = document.getElementById('checklist').checked ? 'Check-list respondido e devolvido ✅' : 'Check-list PENDENTE ❌';
+
+        const texto = `*Seguem os dados do Teste de DHSV - ${nomePoco}:* 👇🏾\n\n` +
+            `*Data:* ${data}\n` +
+            `*Início do teste:* ${inicio}\n` +
+            `*Término do teste:* ${termino}\n` +
+            `*Status do poço:* ${statusPoco}\n` +
+            `*Tipo de fluido:* ${tipoFluido}\n\n` +
+            `*Registro da pressão da cabeça/ anulares inicial:*\n` +
+            `• *Pressão da coluna:* ${pressaoColuna} PSI\n` +
+            `• *Pressão do anular A:* ${pressaoAnularA} PSI\n` +
+            `• *Pressão do anular B:* ${pressaoAnularB} PSI\n\n` +
+            `*Registrar Pressão de linha da DHSV:* ${pressaoLinhaDHSV} PSI\n` +
+            `*Registrar pressão de estabilização em minutos:* ${estabilizacaoMin} min\n` +
+            `*Abrir recirculação da bomba:* ${recirculacao}\n` +
+            `*Drenar trecho entre a DHSV e os bloqueios:* ${drenarTrecho}\n` +
+            `*Acompanhar acréscimo da pressão em no mínimo 30 minutos:* ${acrescinopressao}\n` +
+            `*Pressurizar linha da DHSV lentamente até equalização:* ${pressurizarLinha}\n` +
+            `*Registrar valor da pressão na bomba:* ${pressaoBomba} PSI\n\n` +
+            `*Código/tag:* ${codigoTag}\n` +
+            `*Data de calibração:* ${dataCalibracao}\n` +
+            `*Data de vencimento da calibração:* ${vencimentoCalibracao}\n\n` +
+            `* *Resultado do teste:* ${resultadoTeste}\n` +
+            `* ${checklist}`;
+
+        return texto;
+    }
+
+    function enviarWhatsApp() {
+        const form = document.getElementById('dhsvForm');
+        if (!form.checkValidity()) {
+            alert('Por favor, preencha todos os campos obrigatórios!');
+            form.reportValidity();
+            return;
+        }
+
+        const texto = gerarTextoMensagem();
+        const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
+        window.open(url, '_blank');
+    }
+
+    function copiarTexto() {
+        const form = document.getElementById('dhsvForm');
+        if (!form.checkValidity()) {
+            alert('Por favor, preencha todos os campos obrigatórios antes de copiar!');
+            form.reportValidity();
+            return;
+        }
+
+        const texto = gerarTextoMensagem();
+        navigator.clipboard.writeText(texto).then(() => {
+            alert('Relatório copiado com sucesso!');
+        }).catch(err => {
+            alert('Erro ao copiar texto: ' + err);
+        });
+    }
+</script>
+
+</body>
+</html>
