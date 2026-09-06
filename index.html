@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste de DHSV</title>
-    <link rel="icon" type="image/png" href="DHSV.png">
-    <link rel="apple-touch-icon" href="DHSV.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#1b4332">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Teste DHSV">
+
     <style>
         :root {
             --primary-color: #1b4332;
@@ -19,6 +25,7 @@
             --border-color: #cccccc;
             --whatsapp-color: #25d366;
             --whatsapp-hover: #128c7e;
+            --danger-color: #d9534f;
         }
 
         * {
@@ -45,13 +52,59 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .logo-container img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        /* Estilo do Menu de Navegação */
+        .nav-menu {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px 5px;
+            border: none;
+            background-color: #e9ecef;
+            color: #495057;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         h2 {
             text-align: center;
             color: var(--primary-color);
             margin-bottom: 20px;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .section-title {
@@ -79,6 +132,7 @@
         input[type="number"],
         input[type="date"],
         input[type="time"],
+        textarea,
         select {
             width: 100%;
             padding: 10px;
@@ -89,12 +143,16 @@
             transition: border-color 0.2s;
         }
 
-        /* Força a exibição visual em maiúsculas no input */
-        #nomePoco {
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .input-poco {
             text-transform: uppercase;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             border-color: var(--primary-color);
         }
 
@@ -136,7 +194,7 @@
             gap: 10px;
         }
 
-        button {
+        button.btn-action {
             width: 100%;
             padding: 12px;
             border: none;
@@ -169,10 +227,31 @@
             background-color: #0056b3;
         }
 
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            background-color: #fafafa;
+        }
+
+        .foto-preview {
+            display: none;
+            max-width: 100%;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
         @media (max-width: 480px) {
             .row {
                 flex-direction: column;
                 gap: 0;
+            }
+            .nav-btn {
+                font-size: 0.75rem;
+                padding: 8px 3px;
             }
         }
     </style>
@@ -180,13 +259,25 @@
 <body>
 
 <div class="container">
-    <h2>📋 Formulário - Teste de DHSV</h2>
-    <form id="dhsvForm">
+    <div class="logo-container">
+        <img src="DHSV.png" alt="Petro DHSV Logo">
+    </div>
 
-        <div class="form-group">
-            <label for="nomePoco">Nome / Sigla do Poço:</label>
-            <input type="text" id="nomePoco" placeholder="Ex: BE-0001, ASB-0002" onblur="formatarNomePoco(this)" required>
-        </div>
+    <!-- Menu de Navegação -->
+    <div class="nav-menu">
+        <button class="nav-btn active" onclick="mudarAba('testeTab', this)">📋 Teste DHSV</button>
+        <button class="nav-btn" onclick="mudarAba('falhaTab', this)">⚠️ Falha Encontrada</button>
+        <button class="nav-btn" onclick="mudarAba('pressaoTab', this)">📊 Pressões Poço</button>
+    </div>
+
+    <!-- ABA 1: TESTE DE DHSV -->
+    <div id="testeTab" class="tab-content active">
+         <h2>📋 Formulário - Teste de DHSV</h2>
+        <form id="dhsvForm">
+            <div class="form-group">
+                <label for="nomePoco">Nome / Sigla do Poço:</label>
+                <input type="text" id="nomePoco" class="input-poco" placeholder="Ex: BE-0001" onblur="formatarNomePoco(this)" required>
+            </div>
         
         <div class="form-group">
             <label for="data">Data:</label>
@@ -308,33 +399,307 @@
         </div>
 
         <div class="btn-container">
-            <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp()">📲 Enviar via WhatsApp</button>
-            <button type="button" class="btn-copy" onclick="copiarTexto()">📋 Copiar Texto Formatado</button>
+            <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp('dhsv')">📲 Enviar via WhatsApp</button>
+            <button type="button" class="btn-copy" onclick="copiarTexto('dhsv')">📋 Copiar Texto Formatado</button>
         </div>
 
     </form>
+    </div>
+
+    <!-- ABA 2: FALHA ENCONTRADA -->
+    <div id="falhaTab" class="tab-content">
+        <h2>⚠️ Formulário - Falha Encontrada</h2>
+        <form id="falhaForm">
+            <div class="form-group">
+                <label for="falhaPoco">Nome / Sigla do Poço:</label>
+                <input type="text" id="falhaPoco" class="input-poco" placeholder="Ex: BE-0001" onblur="formatarNomePoco(this)" required>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="falhaData">Data:</label>
+                    <input type="date" id="falhaData" required>
+                </div>
+                <div class="form-group">
+                    <label for="falhaHora">Hora:</label>
+                    <input type="time" id="falhaHora" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="falhaComponente">Componente Afetado:</label>
+                <input type="text" id="falhaComponente" placeholder="Ex: DHSV, Válvula, Linha..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="falhaDescricao">Descrição da Falha:</label>
+                <textarea id="falhaDescricao" placeholder="Descreva a falha encontrada..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="falhaAcao">Ação Tomada / Recomendação:</label>
+                <textarea id="falhaAcao" placeholder="Descreva a ação tomada ou recomendada..." required></textarea>
+            </div>
+
+            <div class="section-title">📷 Fotos</div>
+
+            <div class="form-group">
+                <label for="fotoPoco">Foto do Poço:</label>
+                <input type="file" id="fotoPoco" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewPoco')">
+                <img id="previewPoco" class="foto-preview" alt="Prévia foto do poço">
+            </div>
+
+            <div class="form-group">
+                <label for="fotoPressaoCabeca">Foto da Pressão de Cabeça:</label>
+                <input type="file" id="fotoPressaoCabeca" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewPressaoCabeca')">
+                <img id="previewPressaoCabeca" class="foto-preview" alt="Prévia foto da pressão de cabeça">
+            </div>
+
+            <div class="form-group">
+                <label for="fotoLocalFalha">Foto do Local da Falha:</label>
+                <input type="file" id="fotoLocalFalha" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewLocalFalha')">
+                <img id="previewLocalFalha" class="foto-preview" alt="Prévia foto do local da falha">
+            </div>
+
+            <div class="form-group">
+                <label for="fotoPressaoAnularA">Foto da Pressão do Anular A:</label>
+                <input type="file" id="fotoPressaoAnularA" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularA')">
+                <img id="previewAnularA" class="foto-preview" alt="Prévia foto da pressão do anular A">
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp('falha')">📲 Enviar via WhatsApp</button>
+                <button type="button" class="btn-copy" onclick="copiarTexto('falha')">📋 Copiar Texto Formatado</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ABA 3: PRESSÕES POÇO -->
+    <div id="pressaoTab" class="tab-content">
+        <h2>📊 Formulário - Pressões do Poço</h2>
+        <form id="pressaoForm">
+            <div class="form-group">
+                <label for="pressaoPoco">Nome / Sigla do Poço:</label>
+                <input type="text" id="pressaoPoco" class="input-poco" placeholder="Ex: BE-0001" onblur="formatarNomePoco(this)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="metodoPoco">Método do Poço:</label>
+                <select id="metodoPoco" required onchange="atualizarObrigatoriedadeDhsv()">
+                    <option value="">Selecione...</option>
+                    <option value="UBM">UBM</option>
+                    <option value="BCP">BCP</option>
+                    <option value="BCS">BCS</option>
+                    <option value="Injetor">Injetor</option>
+                    <option value="Surgente">Surgente</option>
+                    <option value="Gás lift">Gás lift</option>
+                    <option value="Capitador">Capitador</option>
+                    <option value="ND">ND</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="statusPocoPressao">Status do Poço:</label>
+                <select id="statusPocoPressao" required>
+                    <option value="">Selecione...</option>
+                    <option value="Produzindo">Produzindo</option>
+                    <option value="Abandono Temporário">Abandono Temporário</option>
+                    <option value="Fechado">Fechado</option>
+                    <option value="Injetando">Injetando</option>
+                    <option value="ND">ND</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="pressaoData">Data:</label>
+                    <input type="date" id="pressaoData" required>
+                </div>
+                <div class="form-group">
+                    <label for="pressaoHora">Hora:</label>
+                    <input type="time" id="pressaoHora" required>
+                </div>
+            </div>
+
+            <div class="section-title">Registro de Pressões</div>
+
+            <div class="form-group">
+                <label for="pColuna">Pressão da Coluna (PSI):</label>
+                <input type="number" id="pColuna" placeholder="0" required>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="pAnularA">Anular A (PSI):</label>
+                    <input type="number" id="pAnularA" placeholder="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="pAnularB">Anular B (PSI):</label>
+                    <input type="number" id="pAnularB" placeholder="Opcional">
+                </div>
+                 <div class="form-group">
+                    <label for="pAnularC">Anular C (PSI):</label>
+                    <input type="number" id="pAnularC" placeholder="Opcional">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pDhsv">Pressão da Linha da DHSV (PSI) — obrigatória apenas se Método = Surgente:</label>
+                <input type="number" id="pDhsv" placeholder="0">
+            </div>
+
+            <div class="section-title">📷 Fotos das Pressões</div>
+
+            <div class="form-group">
+                <label for="fotoColuna">Foto da Pressão da Coluna:</label>
+                <input type="file" id="fotoColuna" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewColunaPressao')" required>
+                <img id="previewColunaPressao" class="foto-preview" alt="Prévia foto da pressão da coluna">
+            </div>
+
+            <div class="form-group">
+                <label for="fotoAnularAPressao">Foto da Pressão do Anular A:</label>
+                <input type="file" id="fotoAnularAPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularAPressao')" required>
+                <img id="previewAnularAPressao" class="foto-preview" alt="Prévia foto da pressão do anular A">
+            </div>
+
+            <div class="form-group">
+                <label for="fotoAnularBPressao">Foto da Pressão do Anular B (obrigatória apenas se houver pressão registrada):</label>
+                <input type="file" id="fotoAnularBPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularBPressao')">
+                <img id="previewAnularBPressao" class="foto-preview" alt="Prévia foto da pressão do anular B">
+            </div>
+
+            <div class="form-group">
+                <label for="fotoAnularCPressao">Foto da Pressão do Anular C (obrigatória apenas se houver pressão registrada):</label>
+                <input type="file" id="fotoAnularCPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularCPressao')">
+                <img id="previewAnularCPressao" class="foto-preview" alt="Prévia foto da pressão do anular C">
+            </div>
+
+            <div class="form-group">
+                <label for="fotoDhsvPressao">Foto da Pressão da Linha da DHSV (obrigatória apenas se Método = Surgente):</label>
+                <input type="file" id="fotoDhsvPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewDhsvPressao')">
+                <img id="previewDhsvPressao" class="foto-preview" alt="Prévia foto da pressão da linha da DHSV">
+            </div>
+
+            <div class="form-group">
+                <label for="pressaoObs">Observações:</label>
+                <textarea id="pressaoObs" placeholder="Observações adicionais (opcional)"></textarea>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp('pressao')">📲 Enviar via WhatsApp</button>
+                <button type="button" class="btn-copy" onclick="copiarTexto('pressao')">📋 Copiar Texto Formatado</button>
+            </div>
+        </form>
+    </div>
+
 </div>
 
 <script>
-    // Função para formatar o nome do poço (MAIÚSCULA e hífen entre letras e números)
+    // Troca de Abas
+    function mudarAba(abaId, elementoBtn) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(abaId).classList.add('active');
+        elementoBtn.classList.add('active');
+    }
+
+    // Formatação das Siglas dos Poços
     function formatarNomePocoInput(valor) {
         if (!valor) return '';
-        
         let texto = valor.toUpperCase().trim();
-        texto = texto.replace(/[\s-]+/g, ''); // Remove espaços ou hifens duplicados temporariamente
-
-        // Separa a parte de letras da parte numérica (Ex: BE0001 -> BE-0001)
+        texto = texto.replace(/[\s-]+/g, '');
         const match = texto.match(/^([A-Z]+)(\d+)$/);
-        
         if (match) {
             return `${match[1]}-${match[2]}`;
         }
-        
         return valor.toUpperCase().trim().replace(/\s+/g, '-');
     }
 
     function formatarNomePoco(input) {
         input.value = formatarNomePocoInput(input.value);
+    }
+
+    // Prévia das fotos selecionadas
+    function previewFoto(input, previewId) {
+        const preview = document.getElementById(previewId);
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '';
+            preview.style.display = 'none';
+        }
+    }
+
+    // Coleta as fotos anexadas na aba de Falha Encontrada
+    function coletarFotosFalha() {
+        const ids = ['fotoPoco', 'fotoPressaoCabeca', 'fotoLocalFalha', 'fotoPressaoAnularA'];
+        const arquivos = [];
+        ids.forEach(id => {
+            const input = document.getElementById(id);
+            if (input && input.files && input.files[0]) {
+                arquivos.push(input.files[0]);
+            }
+        });
+        return arquivos;
+    }
+
+    // Coleta as fotos anexadas na aba de Pressões Poço
+    function coletarFotosPressao() {
+        const ids = ['fotoColuna', 'fotoAnularAPressao', 'fotoAnularBPressao', 'fotoAnularCPressao', 'fotoDhsvPressao'];
+        const arquivos = [];
+        ids.forEach(id => {
+            const input = document.getElementById(id);
+            if (input && input.files && input.files[0]) {
+                arquivos.push(input.files[0]);
+            }
+        });
+        return arquivos;
+    }
+
+    // Ativa/desativa a obrigatoriedade da pressão e foto da DHSV conforme o Método do Poço
+    function atualizarObrigatoriedadeDhsv() {
+        const ehSurgente = document.getElementById('metodoPoco').value === 'Surgente';
+        document.getElementById('pDhsv').required = ehSurgente;
+        document.getElementById('fotoDhsvPressao').required = ehSurgente;
+    }
+
+    // Valida se as fotos do Anular B/C foram anexadas quando há pressão registrada
+    function validarFotosPressao() {
+        const pAnularB = document.getElementById('pAnularB').value.trim();
+        const fotoAnularB = document.getElementById('fotoAnularBPressao');
+        if (pAnularB !== '' && (!fotoAnularB.files || !fotoAnularB.files[0])) {
+            alert('Você registrou uma pressão no Anular B. Por favor, anexe também a foto correspondente.');
+            return false;
+        }
+
+        const pAnularC = document.getElementById('pAnularC').value.trim();
+        const fotoAnularC = document.getElementById('fotoAnularCPressao');
+        if (pAnularC !== '' && (!fotoAnularC.files || !fotoAnularC.files[0])) {
+            alert('Você registrou uma pressão no Anular C. Por favor, anexe também a foto correspondente.');
+            return false;
+        }
+
+        const ehSurgente = document.getElementById('metodoPoco').value === 'Surgente';
+        if (ehSurgente) {
+            const pDhsv = document.getElementById('pDhsv').value.trim();
+            const fotoDhsv = document.getElementById('fotoDhsvPressao');
+            if (pDhsv === '') {
+                alert('Poço Surgente exige o registro da Pressão da Linha da DHSV.');
+                return false;
+            }
+            if (!fotoDhsv.files || !fotoDhsv.files[0]) {
+                alert('Poço Surgente exige a foto da Pressão da Linha da DHSV.');
+                return false;
+            }
+        }
+
+        return true;
     }
 
     function formatarDataBR(dataISO) {
@@ -343,87 +708,171 @@
         return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
 
-    function gerarTextoMensagem() {
-        const inputPoco = document.getElementById('nomePoco');
-        // Garante a formatação antes do envio
-        const nomePoco = formatarNomePocoInput(inputPoco.value);
-        inputPoco.value = nomePoco;
+    // Geração dos Textos para Envio
+    function gerarTexto(tipo) {
+        if (tipo === 'dhsv') {
+            const inputPoco = document.getElementById('nomePoco');
+            const nomePoco = formatarNomePocoInput(inputPoco.value);
+            inputPoco.value = nomePoco;
 
-        const data = formatarDataBR(document.getElementById('data').value);
-        const inicio = document.getElementById('inicio').value;
-        const termino = document.getElementById('termino').value;
-        const statusPoco = document.getElementById('statusPoco').value;
-        const tipoFluido = document.getElementById('tipoFluido').value;
-        
-        const pressaoColuna = document.getElementById('pressaoColuna').value;
-        const pressaoAnularA = document.getElementById('pressaoAnularA').value;
-        const pressaoAnularB = document.getElementById('pressaoAnularB').value;
-        
-        const pressaoLinhaDHSV = document.getElementById('pressaoLinhaDHSV').value;
-        const estabilizacaoMin = document.getElementById('estabilizacaoMin').value;
-        
-        const recirculacao = document.getElementById('recirculacao').checked ? 'Sim (Fechamento da DHSV) - Sim / Pressão da bomba 0 psi / Pressão da linha 0' : 'Não';
-        const drenarTrecho = document.getElementById('drenarTrecho').checked ? 'Sim - 0 psi' : 'Não';
-        
-        const acrescinopressao = document.getElementById('acrescinopressao').value;
-        const pressurizarLinha = document.getElementById('pressurizarLinha').checked ? 'Sim' : 'Não';
-        
-        const pressaoBomba = document.getElementById('pressaoBomba').value;
-        const codigoTag = document.getElementById('codigoTag').value;
-        const dataCalibracao = formatarDataBR(document.getElementById('dataCalibracao').value);
-        const vencimentoCalibracao = formatarDataBR(document.getElementById('vencimentoCalibracao').value);
-        
-        const resultadoTeste = document.getElementById('resultadoTeste').value;
-        const checklist = document.getElementById('checklist').checked ? 'Check-list respondido e devolvido ✅' : 'Check-list PENDENTE ❌';
+            const data = formatarDataBR(document.getElementById('data').value);
+            const inicio = document.getElementById('inicio').value;
+            const termino = document.getElementById('termino').value;
+            const statusPoco = document.getElementById('statusPoco').value;
+            const tipoFluido = document.getElementById('tipoFluido').value;
+            
+            const pressaoColuna = document.getElementById('pressaoColuna').value;
+            const pressaoAnularA = document.getElementById('pressaoAnularA').value;
+            const inputAnularB = document.getElementById('pressaoAnularB').value.trim();
+            const pressaoAnularB = inputAnularB !== '' ? `${inputAnularB} PSI` : '';
+            
+            const pressaoLinhaDHSV = document.getElementById('pressaoLinhaDHSV').value;
+            const estabilizacaoMin = document.getElementById('estabilizacaoMin').value;
+            
+            const recirculacao = document.getElementById('recirculacao').checked ? 'Sim (Fechamento da DHSV) - Sim / Pressão da bomba 0 psi / Pressão da linha 0' : 'Não';
+            const drenarTrecho = document.getElementById('drenarTrecho').checked ? 'Sim - 0 psi' : 'Não';
+            
+            const acrescinopressao = document.getElementById('acrescinopressao').value;
+            const pressurizarLinha = document.getElementById('pressurizarLinha').checked ? 'Sim' : 'Não';
+            
+            const pressaoBomba = document.getElementById('pressaoBomba').value;
+            const codigoTag = document.getElementById('codigoTag').value;
+            const dataCalibracao = formatarDataBR(document.getElementById('dataCalibracao').value);
+            const vencimentoCalibracao = formatarDataBR(document.getElementById('vencimentoCalibracao').value);
+            
+            const resultadoTeste = document.getElementById('resultadoTeste').value;
+            const checklist = document.getElementById('checklist').checked ? 'Check-list respondido e devolvido ✅' : 'Check-list PENDENTE ❌';
 
-        const texto = `*Seguem os dados do Teste de DHSV - ${nomePoco}:* 👇🏾\n\n` +
-            `*Data:* ${data}\n` +
-            `*Início do teste:* ${inicio}\n` +
-            `*Término do teste:* ${termino}\n` +
-            `*Status do poço:* ${statusPoco}\n` +
-            `*Tipo de fluido:* ${tipoFluido}\n\n` +
-            `*Registro da pressão da cabeça/ anulares inicial:*\n` +
-            `• *Pressão da coluna:* ${pressaoColuna} PSI\n` +
-            `• *Pressão do anular A:* ${pressaoAnularA} PSI\n` +
-            `• *Pressão do anular B:* ${pressaoAnularB} PSI\n\n` +
-            `*Registrar Pressão de linha da DHSV:* ${pressaoLinhaDHSV} PSI\n` +
-            `*Registrar pressão de estabilização em minutos:* ${estabilizacaoMin} min\n` +
-            `*Abrir recirculação da bomba:* ${recirculacao}\n` +
-            `*Drenar trecho entre a DHSV e os bloqueios:* ${drenarTrecho}\n` +
-            `*Acompanhar acréscimo da pressão em no mínimo 30 minutos:* ${acrescinopressao}\n` +
-            `*Pressurizar linha da DHSV lentamente até equalização:* ${pressurizarLinha}\n` +
-            `*Registrar valor da pressão na bomba:* ${pressaoBomba} PSI\n\n` +
-            `*Código/tag:* ${codigoTag}\n` +
-            `*Data de calibração:* ${dataCalibracao}\n` +
-            `*Data de vencimento da calibração:* ${vencimentoCalibracao}\n\n` +
-            `* *Resultado do teste:* ${resultadoTeste}\n` +
-            `* ${checklist}`;
+            return `*Seguem os dados do Teste de DHSV - ${nomePoco}:* 👇\n\n` +
+                `*Data:* ${data}\n` +
+                `*Início do teste:* ${inicio}\n` +
+                `*Término do teste:* ${termino}\n` +
+                `*Status do poço:* ${statusPoco}\n` +
+                `*Tipo de fluido:* ${tipoFluido}\n\n` +
+                `*Registro da pressão da cabeça/ anulares inicial:*\n` +
+                `• *Pressão da coluna:* ${pressaoColuna} PSI\n` +
+                `• *Pressão do anular A:* ${pressaoAnularA} PSI\n` +
+                `• *Pressão do anular B:* ${pressaoAnularB}\n\n` +
+                `*Registrar Pressão de linha da DHSV:* ${pressaoLinhaDHSV} PSI\n` +
+                `*Registrar pressão de estabilização em minutos:* ${estabilizacaoMin} min\n` +
+                `*Abrir recirculação da bomba:* ${recirculacao}\n` +
+                `*Drenar trecho entre a DHSV e os bloqueios:* ${drenarTrecho}\n` +
+                `*Acompanhar acréscimo da pressão em no mínimo 30 minutos:* ${acrescinopressao}\n` +
+                `*Pressurizar linha da DHSV lentamente até equalização:* ${pressurizarLinha}\n` +
+                `*Registrar valor da pressão na bomba:* ${pressaoBomba} PSI\n\n` +
+                `*Código/tag:* ${codigoTag}\n` +
+                `*Data de calibração:* ${dataCalibracao}\n` +
+                `*Data de vencimento da calibração:* ${vencimentoCalibracao}\n\n` +
+                `* *Resultado do teste:* ${resultadoTeste}\n` +
+                `* ${checklist}`;
+        }
 
-        return texto;
+        if (tipo === 'falha') {
+            const inputPoco = document.getElementById('falhaPoco');
+            const poco = formatarNomePocoInput(inputPoco.value);
+            inputPoco.value = poco;
+
+            const data = formatarDataBR(document.getElementById('falhaData').value);
+            const hora = document.getElementById('falhaHora').value;
+            const componente = document.getElementById('falhaComponente').value;
+            const descricao = document.getElementById('falhaDescricao').value;
+            const acao = document.getElementById('falhaAcao').value;
+
+            return `*⚠️ REGISTRO DE FALHA ENCONTRADA - ${poco}* ⚠️\n\n` +
+                `*Data:* ${data} às ${hora}\n` +
+                `*Componente afetado:* ${componente}\n\n` +
+                `*Descrição da Falha:*\n${descricao}\n\n` +
+                `*Ação Tomada / Recomendação:*\n${acao}`;
+        }
+
+        if (tipo === 'pressao') {
+            const inputPoco = document.getElementById('pressaoPoco');
+            const poco = formatarNomePocoInput(inputPoco.value);
+            inputPoco.value = poco;
+
+            const data = formatarDataBR(document.getElementById('pressaoData').value);
+            const hora = document.getElementById('pressaoHora').value;
+            const metodoPoco = document.getElementById('metodoPoco').value;
+            const statusPocoPressao = document.getElementById('statusPocoPressao').value;
+            const pColuna = document.getElementById('pColuna').value;
+            const pAnularA = document.getElementById('pAnularA').value;
+            const inputAnularB = document.getElementById('pAnularB').value.trim();
+            const pAnularB = inputAnularB !== '' ? `${inputAnularB} PSI` : 'N/A';
+            const inputAnularC = document.getElementById('pAnularC').value.trim();
+            const pAnularC = inputAnularC !== '' ? `${inputAnularC} PSI` : 'N/A';
+            const inputDhsv = document.getElementById('pDhsv').value.trim();
+            const pDhsv = inputDhsv !== '' ? `${inputDhsv} PSI` : 'N/A';
+            const obs = document.getElementById('pressaoObs').value;
+
+            let texto = `*📊 REGISTRO DE PRESSÕES - ${poco}* 📊\n\n` +
+                `*Data/Hora:* ${data} às ${hora}\n` +
+                `*Método do poço:* ${metodoPoco}\n` +
+                `*Status do poço:* ${statusPocoPressao}\n\n` +
+                `• *Pressão da Coluna:* ${pColuna} PSI\n` +
+                `• *Anular A:* ${pAnularA} PSI\n` +
+                `• *Anular B:* ${pAnularB}\n` +
+                `• *Anular C:* ${pAnularC}\n` +
+                `• *Linha da DHSV:* ${pDhsv}\n`;
+
+            if (obs) {
+                texto += `\n*Observações:*\n${obs}`;
+            }
+
+            return texto;
+        }
     }
 
-    function enviarWhatsApp() {
-        const form = document.getElementById('dhsvForm');
+    async function enviarWhatsApp(tipo) {
+        let formId = tipo === 'dhsv' ? 'dhsvForm' : (tipo === 'falha' ? 'falhaForm' : 'pressaoForm');
+        const form = document.getElementById(formId);
+        
         if (!form.checkValidity()) {
             alert('Por favor, preencha todos os campos obrigatórios!');
             form.reportValidity();
             return;
         }
 
-        const texto = gerarTextoMensagem();
+        if (tipo === 'pressao' && !validarFotosPressao()) {
+            return;
+        }
+
+        const texto = gerarTexto(tipo);
+
+        // Nas abas de Falha e Pressões, tenta enviar o texto junto com as fotos via Web Share API
+        if (tipo === 'falha' || tipo === 'pressao') {
+            const fotos = tipo === 'falha' ? coletarFotosFalha() : coletarFotosPressao();
+            if (fotos.length > 0 && navigator.canShare && navigator.canShare({ files: fotos })) {
+                try {
+                    await navigator.share({ text: texto, files: fotos });
+                    return; // compartilhado com sucesso (texto + fotos)
+                } catch (err) {
+                    // Usuário cancelou o compartilhamento - não faz nada
+                    return;
+                }
+            } else if (fotos.length > 0) {
+                alert('Este navegador não permite enviar fotos junto com o texto automaticamente. O WhatsApp abrirá só com o texto — anexe as fotos manualmente na conversa.');
+            }
+        }
+
         const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
         window.open(url, '_blank');
     }
 
-    function copiarTexto() {
-        const form = document.getElementById('dhsvForm');
+    function copiarTexto(tipo) {
+        let formId = tipo === 'dhsv' ? 'dhsvForm' : (tipo === 'falha' ? 'falhaForm' : 'pressaoForm');
+        const form = document.getElementById(formId);
+        
         if (!form.checkValidity()) {
-            alert('Por favor, preencha todos os campos obrigatórios antes de copiar!');
+            alert('Por favor, preencha todos os campos obrigatórios!');
             form.reportValidity();
             return;
         }
 
-        const texto = gerarTextoMensagem();
+        if (tipo === 'pressao' && !validarFotosPressao()) {
+            return;
+        }
+
+        const texto = gerarTexto(tipo);
         navigator.clipboard.writeText(texto).then(() => {
             alert('Relatório copiado com sucesso!');
         }).catch(err => {
