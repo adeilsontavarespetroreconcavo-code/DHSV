@@ -15,246 +15,229 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Teste DHSV">
 
-    <style>
-        :root {
-            --primary-color: #1b4332;
-            --primary-hover: #2d6a4f;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #2b2b2b;
-            --border-color: #cccccc;
-            --whatsapp-color: #25d366;
-            --whatsapp-hover: #128c7e;
-            --danger-color: #d9534f;
-        }
+   <style>
+    :root {
+        --primary-color: #1b4332;
+        --primary-hover: #2d6a4f;
+        --bg-color: #f4f7f6;
+        --card-bg: #ffffff;
+        --text-color: #2b2b2b;
+        --border-color: #cccccc;
+        --whatsapp-color: #25d366;
+        --whatsapp-hover: #128c7e;
+        --danger-color: #d9534f;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-        }
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+    .container {
+        width: 100%;
+        max-width: 600px;
+        background-color: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 15px;
-        }
+    .logo-container {
+        text-align: center;
+        margin-bottom: 15px;
+    }
 
-        .logo-container img {
-            max-width: 180px;
-            height: auto;
-        }
+    .logo-container img {
+        max-width: 180px;
+        height: auto;
+    }
 
-        /* Estilo do Menu de Navegação */
-        .nav-menu {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
-        }
+    /* Estilo do Menu de Navegação */
+    .nav-menu {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+    }
 
-        .nav-btn {
-            flex: 1;
-            padding: 10px 5px;
-            border: none;
-            background-color: #e9ecef;
-            color: #495057;
-            font-weight: 600;
-            font-size: 0.85rem;
-            border-radius: 6px 6px 0 0;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-        }
+    .nav-btn {
+        flex: 1;
+        padding: 10px 5px;
+        border: none;
+        background-color: #e9ecef;
+        color: #495057;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border-radius: 6px 6px 0 0;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+    }
 
-        .nav-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-        }
+    .nav-btn.active {
+        background-color: var(--primary-color);
+        color: white;
+    }
 
-        .tab-content {
-            display: none;
-        }
+    .tab-content {
+        display: none;
+    }
 
-        .tab-content.active {
-            display: block;
-        }
+    .tab-content.active {
+        display: block;
+    }
 
-        h2 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px;
-        }
+    h2 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 8px;
+    }
 
-        .section-title {
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 15px 0 10px 0;
-            font-size: 1rem;
-            background-color: #e8f5e9;
-            padding: 6px 10px;
-            border-radius: 4px;
-        }
+    .section-title {
+        font-weight: bold;
+        color: var(--primary-color);
+        margin: 15px 0 10px 0;
+        font-size: 1rem;
+        background-color: #e8f5e9;
+        padding: 6px 10px;
+        border-radius: 4px;
+    }
 
-        .form-group {
-            margin-bottom: 12px;
-        }
+    .form-group {
+        margin-bottom: 12px;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
+    label {
+        display: block;
+        margin-bottom: 4px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        input[type="time"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
 
-        .input-poco {
-            text-transform: uppercase;
-        }
+    .input-poco {
+        text-transform: uppercase;
+    }
 
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary-color);
-        }
+    input:focus, select:focus, textarea:focus {
+        border-color: var(--primary-color);
+    }
 
+    .row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .row .form-group {
+        flex: 1;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+        background-color: #fafafa;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #eee;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary-color);
+    }
+
+    .checkbox-group label {
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+
+    .btn-container {
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button.btn-action {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-whatsapp {
+        background-color: var(--whatsapp-color);
+        color: white;
+    }
+
+    .btn-whatsapp:hover {
+        background-color: var(--whatsapp-hover);
+    }
+
+    .btn-copy {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-copy:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 480px) {
         .row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .row .form-group {
-            flex: 1;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            background-color: #fafafa;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #eee;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary-color);
-        }
-
-        .checkbox-group label {
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .btn-container {
-            margin-top: 25px;
-            display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 0;
         }
-
-        button.btn-action {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .nav-btn {
+            font-size: 0.75rem;
+            padding: 8px 3px;
         }
-
-        .btn-whatsapp {
-            background-color: var(--whatsapp-color);
-            color: white;
-        }
-
-        .btn-whatsapp:hover {
-            background-color: var(--whatsapp-hover);
-        }
-
-        .btn-copy {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .btn-copy:hover {
-            background-color: #0056b3;
-        }
-
-        input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px dashed var(--border-color);
-            border-radius: 6px;
-            font-size: 0.85rem;
-            background-color: #fafafa;
-        }
-
-        .foto-preview {
-            display: none;
-            max-width: 100%;
-            margin-top: 8px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-        }
-
-        @media (max-width: 480px) {
-            .row {
-                flex-direction: column;
-                gap: 0;
-            }
-            .nav-btn {
-                font-size: 0.75rem;
-                padding: 8px 3px;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
@@ -406,7 +389,7 @@
     </form>
     </div>
 
-    <!-- ABA 2: FALHA ENCONTRADA -->
+  <!-- ABA 2: FALHA ENCONTRADA -->
     <div id="falhaTab" class="tab-content">
         <h2>⚠️ Formulário - Falha Encontrada</h2>
         <form id="falhaForm">
@@ -439,32 +422,6 @@
             <div class="form-group">
                 <label for="falhaAcao">Ação Tomada / Recomendação:</label>
                 <textarea id="falhaAcao" placeholder="Descreva a ação tomada ou recomendada..." required></textarea>
-            </div>
-
-            <div class="section-title">📷 Fotos</div>
-
-            <div class="form-group">
-                <label for="fotoPoco">Foto do Poço:</label>
-                <input type="file" id="fotoPoco" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewPoco')">
-                <img id="previewPoco" class="foto-preview" alt="Prévia foto do poço">
-            </div>
-
-            <div class="form-group">
-                <label for="fotoPressaoCabeca">Foto da Pressão de Cabeça:</label>
-                <input type="file" id="fotoPressaoCabeca" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewPressaoCabeca')">
-                <img id="previewPressaoCabeca" class="foto-preview" alt="Prévia foto da pressão de cabeça">
-            </div>
-
-            <div class="form-group">
-                <label for="fotoLocalFalha">Foto do Local da Falha:</label>
-                <input type="file" id="fotoLocalFalha" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewLocalFalha')">
-                <img id="previewLocalFalha" class="foto-preview" alt="Prévia foto do local da falha">
-            </div>
-
-            <div class="form-group">
-                <label for="fotoPressaoAnularA">Foto da Pressão do Anular A:</label>
-                <input type="file" id="fotoPressaoAnularA" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularA')">
-                <img id="previewAnularA" class="foto-preview" alt="Prévia foto da pressão do anular A">
             </div>
 
             <div class="btn-container">
@@ -537,7 +494,7 @@
                     <label for="pAnularB">Anular B (PSI):</label>
                     <input type="number" id="pAnularB" placeholder="Opcional">
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label for="pAnularC">Anular C (PSI):</label>
                     <input type="number" id="pAnularC" placeholder="Opcional">
                 </div>
@@ -546,38 +503,6 @@
             <div class="form-group">
                 <label for="pDhsv">Pressão da Linha da DHSV (PSI) — obrigatória apenas se Método = Surgente:</label>
                 <input type="number" id="pDhsv" placeholder="0">
-            </div>
-
-            <div class="section-title">📷 Fotos das Pressões</div>
-
-            <div class="form-group">
-                <label for="fotoColuna">Foto da Pressão da Coluna:</label>
-                <input type="file" id="fotoColuna" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewColunaPressao')" required>
-                <img id="previewColunaPressao" class="foto-preview" alt="Prévia foto da pressão da coluna">
-            </div>
-
-            <div class="form-group">
-                <label for="fotoAnularAPressao">Foto da Pressão do Anular A:</label>
-                <input type="file" id="fotoAnularAPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularAPressao')" required>
-                <img id="previewAnularAPressao" class="foto-preview" alt="Prévia foto da pressão do anular A">
-            </div>
-
-            <div class="form-group">
-                <label for="fotoAnularBPressao">Foto da Pressão do Anular B (obrigatória apenas se houver pressão registrada):</label>
-                <input type="file" id="fotoAnularBPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularBPressao')">
-                <img id="previewAnularBPressao" class="foto-preview" alt="Prévia foto da pressão do anular B">
-            </div>
-
-            <div class="form-group">
-                <label for="fotoAnularCPressao">Foto da Pressão do Anular C (obrigatória apenas se houver pressão registrada):</label>
-                <input type="file" id="fotoAnularCPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewAnularCPressao')">
-                <img id="previewAnularCPressao" class="foto-preview" alt="Prévia foto da pressão do anular C">
-            </div>
-
-            <div class="form-group">
-                <label for="fotoDhsvPressao">Foto da Pressão da Linha da DHSV (obrigatória apenas se Método = Surgente):</label>
-                <input type="file" id="fotoDhsvPressao" accept="image/*" capture="environment" onchange="previewFoto(this, 'previewDhsvPressao')">
-                <img id="previewDhsvPressao" class="foto-preview" alt="Prévia foto da pressão da linha da DHSV">
             </div>
 
             <div class="form-group">
@@ -591,9 +516,7 @@
             </div>
         </form>
     </div>
-
 </div>
-
 <script>
     // Troca de Abas
     function mudarAba(abaId, elementoBtn) {
@@ -620,85 +543,22 @@
         input.value = formatarNomePocoInput(input.value);
     }
 
-    // Prévia das fotos selecionadas
-    function previewFoto(input, previewId) {
-        const preview = document.getElementById(previewId);
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            };
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            preview.src = '';
-            preview.style.display = 'none';
-        }
-    }
-
-    // Coleta as fotos anexadas na aba de Falha Encontrada
-    function coletarFotosFalha() {
-        const ids = ['fotoPoco', 'fotoPressaoCabeca', 'fotoLocalFalha', 'fotoPressaoAnularA'];
-        const arquivos = [];
-        ids.forEach(id => {
-            const input = document.getElementById(id);
-            if (input && input.files && input.files[0]) {
-                arquivos.push(input.files[0]);
-            }
-        });
-        return arquivos;
-    }
-
-    // Coleta as fotos anexadas na aba de Pressões Poço
-    function coletarFotosPressao() {
-        const ids = ['fotoColuna', 'fotoAnularAPressao', 'fotoAnularBPressao', 'fotoAnularCPressao', 'fotoDhsvPressao'];
-        const arquivos = [];
-        ids.forEach(id => {
-            const input = document.getElementById(id);
-            if (input && input.files && input.files[0]) {
-                arquivos.push(input.files[0]);
-            }
-        });
-        return arquivos;
-    }
-
-    // Ativa/desativa a obrigatoriedade da pressão e foto da DHSV conforme o Método do Poço
+    // Ativa/desativa a obrigatoriedade da pressão da DHSV conforme o Método do Poço
     function atualizarObrigatoriedadeDhsv() {
         const ehSurgente = document.getElementById('metodoPoco').value === 'Surgente';
         document.getElementById('pDhsv').required = ehSurgente;
-        document.getElementById('fotoDhsvPressao').required = ehSurgente;
     }
 
-    // Valida se as fotos do Anular B/C foram anexadas quando há pressão registrada
-    function validarFotosPressao() {
-        const pAnularB = document.getElementById('pAnularB').value.trim();
-        const fotoAnularB = document.getElementById('fotoAnularBPressao');
-        if (pAnularB !== '' && (!fotoAnularB.files || !fotoAnularB.files[0])) {
-            alert('Você registrou uma pressão no Anular B. Por favor, anexe também a foto correspondente.');
-            return false;
-        }
-
-        const pAnularC = document.getElementById('pAnularC').value.trim();
-        const fotoAnularC = document.getElementById('fotoAnularCPressao');
-        if (pAnularC !== '' && (!fotoAnularC.files || !fotoAnularC.files[0])) {
-            alert('Você registrou uma pressão no Anular C. Por favor, anexe também a foto correspondente.');
-            return false;
-        }
-
+    // Valida o preenchimento dos campos obrigatórios da aba Pressão
+    function validarPressao() {
         const ehSurgente = document.getElementById('metodoPoco').value === 'Surgente';
         if (ehSurgente) {
             const pDhsv = document.getElementById('pDhsv').value.trim();
-            const fotoDhsv = document.getElementById('fotoDhsvPressao');
             if (pDhsv === '') {
                 alert('Poço Surgente exige o registro da Pressão da Linha da DHSV.');
                 return false;
             }
-            if (!fotoDhsv.files || !fotoDhsv.files[0]) {
-                alert('Poço Surgente exige a foto da Pressão da Linha da DHSV.');
-                return false;
-            }
         }
-
         return true;
     }
 
@@ -822,7 +682,7 @@
         }
     }
 
-    async function enviarWhatsApp(tipo) {
+    function enviarWhatsApp(tipo) {
         let formId = tipo === 'dhsv' ? 'dhsvForm' : (tipo === 'falha' ? 'falhaForm' : 'pressaoForm');
         const form = document.getElementById(formId);
         
@@ -832,28 +692,11 @@
             return;
         }
 
-        if (tipo === 'pressao' && !validarFotosPressao()) {
+        if (tipo === 'pressao' && !validarPressao()) {
             return;
         }
 
         const texto = gerarTexto(tipo);
-
-        // Nas abas de Falha e Pressões, tenta enviar o texto junto com as fotos via Web Share API
-        if (tipo === 'falha' || tipo === 'pressao') {
-            const fotos = tipo === 'falha' ? coletarFotosFalha() : coletarFotosPressao();
-            if (fotos.length > 0 && navigator.canShare && navigator.canShare({ files: fotos })) {
-                try {
-                    await navigator.share({ text: texto, files: fotos });
-                    return; // compartilhado com sucesso (texto + fotos)
-                } catch (err) {
-                    // Usuário cancelou o compartilhamento - não faz nada
-                    return;
-                }
-            } else if (fotos.length > 0) {
-                alert('Este navegador não permite enviar fotos junto com o texto automaticamente. O WhatsApp abrirá só com o texto — anexe as fotos manualmente na conversa.');
-            }
-        }
-
         const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
         window.open(url, '_blank');
     }
@@ -868,7 +711,7 @@
             return;
         }
 
-        if (tipo === 'pressao' && !validarFotosPressao()) {
+        if (tipo === 'pressao' && !validarPressao()) {
             return;
         }
 
