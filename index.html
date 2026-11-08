@@ -292,7 +292,7 @@
 
 <div class="container">
     <div class="logo-container">
-        <img id="logoImg" src="DHSV.png" alt="Petro DHSV Logo" crossorigin="anonymous">
+        <img src="DHSV.png" alt="Petro DHSV Logo">
     </div>
 
     <!-- Menu de Navegação -->
@@ -310,7 +310,7 @@
                 <label for="nomePoco">Nome / Sigla do Poço:</label>
                 <input type="text" id="nomePoco" class="input-poco" placeholder="Ex: BE-0001" onblur="formatarNomePoco(this)" required>
             </div>
-    
+               
         <div class="form-group">
             <label for="data">Data:</label>
             <input type="date" id="data" required>
@@ -416,7 +416,7 @@
             <label for="pressaoBomba">Valor da Pressão na Bomba/Painel (PSI):</label>
             <input type="number" id="pressaoBomba" placeholder="0" required>
         </div>
-        
+         
         <div class="section-title">Resultados</div>
 
         <div class="form-group">
@@ -508,26 +508,26 @@
 
             <div class="row">
                 <div class="form-group">
-                    <label for="pressaoCabeca">Pressão de Cabeça (PSI):</label>
-                    <input type="text" id="falhaClassePressao" placeholder="Ex: 5000 PSI">
+                    <label for="falhaPressaoCabeca">Pressão de Cabeça (PSI):</label>
+                    <input type="number" id="falhaPressaoCabeca" placeholder="Ex: 500">
                 </div>
-                 <div class="form-group">
-                    <label for="pressaoAnularA">Pressão de anular A (PSI):</label>
-                    <input type="text" id="falhaClassePressao" placeholder="Ex: 5000 PSI">
+                <div class="form-group">
+                    <label for="falhaPressaoAnularA">Pressão de anular A (PSI):</label>
+                    <input type="number" id="falhaPressaoAnularA" placeholder="Ex: 500">
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group">
-                    <label for="pressaoAnularB">Pressão de anular B (PSI):</label>
-                    <input type="number" id="pressaoAnularB" placeholder="Opcional">
+                    <label for="falhaPressaoAnularB">Pressão de anular B (PSI):</label>
+                    <input type="number" id="falhaPressaoAnularB" placeholder="Opcional">
                 </div>
                 <div class="form-group">
-                    <label for="pressaoAnularC">Pressão de anular C (PSI):</label>
-                     <input type="number" id="pressaoAnularB" placeholder="Opcional">
+                    <label for="falhaPressaoAnularC">Pressão de anular C (PSI):</label>
+                    <input type="number" id="falhaPressaoAnularC" placeholder="Opcional">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label for="falhaDescricao">Descrição da Falha:</label>
                 <textarea id="falhaDescricao" placeholder="Descreva a falha encontrada..." required></textarea>
@@ -714,7 +714,6 @@
                 <tr><td>Acompanhamentos Diários</td><td id="totalAcompanhamento">0</td></tr>
                 <tr><td>Testes de DHSV</td><td id="totalDhsv">0</td></tr>
                 <tr><td>Outras Tarefas</td><td id="totalOutras">0</td></tr>
-                <tr><td>Pendencias</td><td id="tarefasPendentes">0</td></tr>
                 <tr class="total-geral"><td>Total Geral</td><td id="totalGeral">0</td></tr>
             </table>
           
@@ -1061,6 +1060,7 @@
             const hora = document.getElementById('falhaHora').value;
             const componente = document.getElementById('falhaComponente').value;
             const nd = id => document.getElementById(id).value.trim() || 'N/D';
+            const pv = id => { const v = document.getElementById(id).value.trim(); return v !== '' ? v + ' PSI' : 'N/D'; };
             const descricao = document.getElementById('falhaDescricao').value;
             const acao = document.getElementById('falhaAcao').value;
 
@@ -1073,6 +1073,11 @@
                 `• *Tipo:* ${nd('falhaTipo')}\n` +
                 `• *Fabricante:* ${nd('falhaFabricante')}\n` +
                 `• *Status:* ${nd('falhaStatus')}\n\n` +
+                `*Pressões do poço:*\n` +
+                `• *Cabeça:* ${pv('falhaPressaoCabeca')}\n` +
+                `• *Anular A:* ${pv('falhaPressaoAnularA')}\n` +
+                `• *Anular B:* ${pv('falhaPressaoAnularB')}\n` +
+                `• *Anular C:* ${pv('falhaPressaoAnularC')}\n\n` +
                 `*Descrição da Falha:*\n${descricao}\n\n` +
                 `*Ação Tomada / Recomendação:*\n${acao}`;
         }
