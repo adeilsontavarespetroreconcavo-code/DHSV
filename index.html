@@ -4,7 +4,1192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste de DHSV</title>
+    <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de DHSV</title>
     
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#1b4332">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Teste DHSV">
+
+    <style>
+        :root {
+            --primary-color: #1b4332;
+            --primary-hover: #2d6a4f;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2b2b2b;
+            --border-color: #cccccc;
+            --whatsapp-color: #25d366;
+            --whatsapp-hover: #128c7e;
+            --danger-color: #d9534f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .logo-container img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        /* Estilo do Menu de Navegação */
+        .nav-menu {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px 5px;
+            border: none;
+            background-color: #e9ecef;
+            color: #495057;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0 10px 0;
+            font-size: 1rem;
+            background-color: #e8f5e9;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="time"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .input-poco {
+            text-transform: uppercase;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            background-color: #fafafa;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .btn-container {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button.btn-action {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp, .btn-copy, .btn-pdf {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: var(--whatsapp-hover);
+        }
+
+        .btn-copy {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-copy:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-pdf {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-pdf:hover {
+            background-color: #545b62;
+        }
+
+        input[readonly] {
+            background-color: #eef2f0;
+            color: #495057;
+            cursor: not-allowed;
+        }
+
+        .tabela-totais {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        .tabela-totais td {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .tabela-totais td:last-child {
+            text-align: right;
+            font-weight: bold;
+            width: 90px;
+        }
+
+        .tabela-totais tr.total-geral td {
+            background-color: #e8f5e9;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .nav-btn {
+                font-size: 0.75rem;
+                padding: 8px 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo-container">
+        <img id="logoImg" src="DHSV.png" alt="Petro DHSV Logo" crossorigin="anonymous">
+    </div>
+
+    <!-- Menu de Navegação -->
+    <div class="nav-menu">
+        <button class="nav-btn active" onclick="mudarAba('testeTab', this)">📋 Teste DHSV</button>
+        <button class="nav-btn" onclick="mudarAba('falhaTab', this)">⚠️ Falha Encontrada</button>
+        <button class="nav-btn" onclick="mudarAba('tarefasTab', this)">🗓️ Tarefas Realizadas</button>
+    </div>
+
+    <!-- ABA 1: TESTE DE DHSV -->
+    <div id="testeTab" class="tab-content active">
+         <h2>📋 Formulário - Teste de DHSV</h2>
+        <form id="dhsvForm">
+            <div class="form-group">
+                <label for="nomePoco">Nome / Sigla do Poço:</label>
+                <input type="text" id="nomePoco" class="input-poco" placeholder="Ex: BE-0001" onblur="formatarNomePoco(this)" required>
+            </div>
+    
+        <div class="form-group">
+            <label for="data">Data:</label>
+            <input type="date" id="data" required>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="inicio">Início do Teste:</label>
+                <input type="time" id="inicio" required oninput="calcularTempoTeste()">
+            </div>
+            <div class="form-group">
+                <label for="termino">Término do Teste:</label>
+                <input type="time" id="termino" required oninput="calcularTempoTeste()">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="tempoTeste">Tempo de Teste (calculado automaticamente):</label>
+            <input type="text" id="tempoTeste" placeholder="00:00:00" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="statusPoco">Status do Poço:</label>
+            <input type="text" id="statusPoco" placeholder="Ex: Produzindo, Fechado..." required>
+        </div>
+
+        <div class="form-group">
+            <label for="metodoPocoDhsv">Método do Poço:</label>
+            <select id="metodoPocoDhsv" required>
+                <option value="">Selecione...</option>
+                <option value="UBM">UBM</option>
+                <option value="BCP">BCP</option>
+                <option value="BCS">BCS</option>
+                <option value="Injetor">Injetor</option>
+                <option value="Surgente">Surgente</option>
+                <option value="Gás lift">Gás lift</option>
+                <option value="Capitador">Capitador</option>
+                <option value="ND">ND</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="tipoFluido">Tipo de Fluido:</label>
+            <select id="tipoFluido" required>
+                <option value="">Selecione...</option>
+                <option value="Gás">Gás</option>
+                <option value="Líquido">Líquido</option>
+                <option value="Gás e Líquido">Gás e Líquido</option>
+            </select>
+        </div>
+
+        <div class="section-title">Pressão da Cabeça / Anulares Inicial</div>
+        
+        <div class="form-group">
+            <label for="pressaoColuna">Pressão da Coluna (PSI):</label>
+            <input type="number" id="pressaoColuna" placeholder="0" required>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="pressaoAnularA">Anular A (PSI):</label>
+                <input type="number" id="pressaoAnularA" placeholder="0" required>
+            </div>
+            <div class="form-group">
+                <label for="pressaoAnularB">Anular B (PSI):</label>
+                <input type="number" id="pressaoAnularB" placeholder="Opcional">
+            </div>
+        </div>
+
+        <div class="section-title">Dados do Teste DHSV</div>
+
+        <div class="form-group">
+            <label for="pressaoLinhaDHSV">Pressão da Linha da DHSV (PSI):</label>
+            <input type="number" id="pressaoLinhaDHSV" placeholder="0" required>
+        </div>
+
+        <div class="form-group">
+            <label for="estabilizacaoMin">Estabilização (Minutos):</label>
+           <input type="text" id="estabilizacaoMin" placeholder="Ex: Sem variação / +5 psi" required>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="recirculacao" checked>
+            <label for="recirculacao">Abrir recirculação da bomba (Fechamento DHSV - Pressão bomba/linha 0 psi)</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="drenarTrecho" checked>
+            <label for="drenarTrecho">Drenar trecho entre a DHSV e os bloqueios (0 psi)</label>
+        </div>
+
+        <div class="form-group">
+            <label for="acrescinopressao">Acréscimo de pressão (mínimo 30 min):</label>
+            <input type="text" id="acrescinopressao" placeholder="Ex: Sem variação / +5 psi" required>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="pressurizarLinha" checked>
+            <label for="pressurizarLinha">Pressurizar linha da DHSV lentamente até equalização</label>
+        </div>
+
+        <div class="form-group">
+            <label for="pressaoBomba">Valor da Pressão na Bomba/Painel (PSI):</label>
+            <input type="number" id="pressaoBomba" placeholder="0" required>
+        </div>
+        
+        <div class="section-title">Resultados</div>
+
+        <div class="form-group">
+            <label for="diferencialPressao">Diferencial de Pressão (PSI):</label>
+            <input type="number" id="diferencialPressao" placeholder="Opcional">
+        </div>
+
+        <div class="form-group">
+            <label for="resultadoTeste">Resultado do Teste:</label>
+            <select id="resultadoTeste" required>
+                <option value="DHSV Conforme ✅">DHSV Conforme ✅</option>
+                <option value="DHSV Não Conforme ❌">DHSV Não Conforme ❌</option>
+            </select>
+        </div>
+
+        <div class="checkbox-group">
+            <input type="checkbox" id="checklist" checked>
+            <label for="checklist">Check-list respondido e devolvido ✅</label>
+        </div>
+
+        <div class="form-group">
+            <label for="observacaoDhsv">Observação:</label>
+            <textarea id="observacaoDhsv" placeholder="Observações adicionais (opcional)"></textarea>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp('dhsv')">📲 Enviar via WhatsApp</button>
+            <button type="button" class="btn-copy" onclick="copiarTexto('dhsv')">📋 Copiar Texto Formatado</button>
+            <button type="button" class="btn-pdf" onclick="gerarPDFDhsv()">📄 Gerar e Salvar PDF</button>
+        </div>
+
+    </form>
+    </div>
+
+    <!-- ABA 2: FALHA ENCONTRADA -->
+    <div id="falhaTab" class="tab-content">
+        <h2>⚠️ Formulário - Falha Encontrada</h2>
+        <form id="falhaForm">
+            <div class="form-group">
+                <label for="falhaPoco">Nome / Sigla do Poço:</label>
+                <input type="text" id="falhaPoco" class="input-poco" placeholder="Ex: BE-0001" onblur="formatarNomePoco(this)" required>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="falhaData">Data:</label>
+                    <input type="date" id="falhaData" required>
+                </div>
+                <div class="form-group">
+                    <label for="falhaHora">Hora:</label>
+                    <input type="time" id="falhaHora" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="falhaComponente">Componente Afetado:</label>
+                <input type="text" id="falhaComponente" placeholder="Ex: DHSV, Válvula, Linha..." required>
+            </div>
+<div class="section-title">Especificações do Componente</div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="falhaClassePressao">Classe de Pressão:</label>
+                    <input type="text" id="falhaClassePressao" placeholder="Ex: 5000 PSI">
+                </div>
+                <div class="form-group">
+                    <label for="falhaDiametro">Diâmetro:</label>
+                    <input type="text" id="falhaDiametro" placeholder='Ex: 2 1/16"'>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="falhaTipo">Tipo:</label>
+                    <input type="text" id="falhaTipo" placeholder="Ex: Gaveta, Esfera...">
+                </div>
+                <div class="form-group">
+                    <label for="falhaFabricante">Fabricante:</label>
+                    <input type="text" id="falhaFabricante" placeholder="Ex: Cameron">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="falhaStatus">Status:</label>
+                <input type="text" id="falhaStatus" placeholder="Ex: Inoperante, Com vazamento...">
+            </div>
+
+            <div class="section-title">Pressões do poço</div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="pressaoCabeca">Pressão de Cabeça (PSI):</label>
+                    <input type="text" id="falhaClassePressao" placeholder="Ex: 5000 PSI">
+                </div>
+                 <div class="form-group">
+                    <label for="pressaoAnularA">Pressão de anular A (PSI):</label>
+                    <input type="text" id="falhaClassePressao" placeholder="Ex: 5000 PSI">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="pressaoAnularB">Pressão de anular B (PSI):</label>
+                    <input type="number" id="pressaoAnularB" placeholder="Opcional">
+                </div>
+                <div class="form-group">
+                    <label for="pressaoAnularC">Pressão de anular C (PSI):</label>
+                     <input type="number" id="pressaoAnularB" placeholder="Opcional">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="falhaDescricao">Descrição da Falha:</label>
+                <textarea id="falhaDescricao" placeholder="Descreva a falha encontrada..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="falhaAcao">Ação Tomada / Recomendação:</label>
+                <textarea id="falhaAcao" placeholder="Descreva a ação tomada ou recomendada..." required></textarea>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp('falha')">📲 Enviar via WhatsApp</button>
+                <button type="button" class="btn-copy" onclick="copiarTexto('falha')">📋 Copiar Texto Formatado</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ABA 3: TAREFAS REALIZADAS -->
+    <div id="tarefasTab" class="tab-content">
+        <h2>🗓️ Formulário - Tarefas Realizadas</h2>
+        <form id="tarefasForm">
+
+            <div class="section-title">Dia 1</div>
+
+            <div class="form-group">
+                <label for="tarefaData1">Data (Dia 1):</label>
+                <input type="date" id="tarefaData1" required onchange="preencherDatasTarefas()">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_checklist_1">Total de Checklist:</label>
+                    <input type="number" id="tarefa_checklist_1" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_acompanhamento_1">Total de Acompanhamentos Diários:</label>
+                    <input type="number" id="tarefa_acompanhamento_1" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_dhsv_1">Total de Testes de DHSV:</label>
+                    <input type="number" id="tarefa_dhsv_1" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_outras_1">Outras Tarefas:</label>
+                    <input type="number" id="tarefa_outras_1" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="section-title">Dia 2</div>
+
+            <div class="form-group">
+                <label for="tarefaData2">Data (Dia 2):</label>
+                <input type="date" id="tarefaData2" required oninput="this.dataset.auto=''">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_checklist_2">Total de Checklist:</label>
+                    <input type="number" id="tarefa_checklist_2" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_acompanhamento_2">Total de Acompanhamentos Diários:</label>
+                    <input type="number" id="tarefa_acompanhamento_2" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_dhsv_2">Total de Testes de DHSV:</label>
+                    <input type="number" id="tarefa_dhsv_2" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_outras_2">Outras Tarefas:</label>
+                    <input type="number" id="tarefa_outras_2" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="section-title">Dia 3</div>
+
+            <div class="form-group">
+                <label for="tarefaData3">Data (Dia 3):</label>
+                <input type="date" id="tarefaData3" required oninput="this.dataset.auto=''">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_checklist_3">Total de Checklist:</label>
+                    <input type="number" id="tarefa_checklist_3" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_acompanhamento_3">Total de Acompanhamentos Diários:</label>
+                    <input type="number" id="tarefa_acompanhamento_3" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_dhsv_3">Total de Testes de DHSV:</label>
+                    <input type="number" id="tarefa_dhsv_3" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_outras_3">Outras Tarefas:</label>
+                    <input type="number" id="tarefa_outras_3" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="section-title">Dia 4</div>
+
+            <div class="form-group">
+                <label for="tarefaData4">Data (Dia 4):</label>
+                <input type="date" id="tarefaData4" required oninput="this.dataset.auto=''">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_checklist_4">Total de Checklist:</label>
+                    <input type="number" id="tarefa_checklist_4" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_acompanhamento_4">Total de Acompanhamentos Diários:</label>
+                    <input type="number" id="tarefa_acompanhamento_4" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_dhsv_4">Total de Testes de DHSV:</label>
+                    <input type="number" id="tarefa_dhsv_4" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_outras_4">Outras Tarefas:</label>
+                    <input type="number" id="tarefa_outras_4" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="section-title">Dia 5</div>
+
+            <div class="form-group">
+                <label for="tarefaData5">Data (Dia 5):</label>
+                <input type="date" id="tarefaData5" required oninput="this.dataset.auto=''">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_checklist_5">Total de Checklist:</label>
+                    <input type="number" id="tarefa_checklist_5" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_acompanhamento_5">Total de Acompanhamentos Diários:</label>
+                    <input type="number" id="tarefa_acompanhamento_5" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="tarefa_dhsv_5">Total de Testes de DHSV:</label>
+                    <input type="number" id="tarefa_dhsv_5" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+                <div class="form-group">
+                    <label for="tarefa_outras_5">Outras Tarefas:</label>
+                    <input type="number" id="tarefa_outras_5" min="0" step="1" placeholder="0" oninput="atualizarTotaisTarefas()">
+                </div>
+            </div>
+
+            <div class="section-title">Tarefas Pendentes</div>
+
+            <div class="form-group">
+                <label for="tarefasPendentes">Pendentes (se houver):</label>
+                <textarea id="tarefasPendentes" rows="3" placeholder="Descreva as tarefas que ficaram pendentes"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="motivoPendencias">Motivo das pendências:</label>
+                <textarea id="motivoPendencias" rows="3" placeholder="Informe o motivo pelo qual ficaram pendentes"></textarea>
+            </div>
+
+            <div class="section-title">Total dos 5 Dias (soma por tipo de tarefa)</div>
+
+            <table class="tabela-totais">
+                <tr><td>Checklist</td><td id="totalChecklist">0</td></tr>
+                <tr><td>Acompanhamentos Diários</td><td id="totalAcompanhamento">0</td></tr>
+                <tr><td>Testes de DHSV</td><td id="totalDhsv">0</td></tr>
+                <tr><td>Outras Tarefas</td><td id="totalOutras">0</td></tr>
+                <tr><td>Pendencias</td><td id="tarefasPendentes">0</td></tr>
+                <tr class="total-geral"><td>Total Geral</td><td id="totalGeral">0</td></tr>
+            </table>
+          
+            <div class="btn-container">
+                <button type="button" class="btn-whatsapp" onclick="enviarWhatsApp('tarefas')">📲 Enviar via WhatsApp</button>
+                <button type="button" class="btn-copy" onclick="copiarTexto('tarefas')">📋 Copiar Texto Formatado</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    // Troca de Abas
+    function mudarAba(abaId, elementoBtn) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(abaId).classList.add('active');
+        elementoBtn.classList.add('active');
+    }
+
+    // Formatação das Siglas dos Poços
+    function formatarNomePocoInput(valor) {
+        if (!valor) return '';
+        let texto = valor.toUpperCase().trim();
+        texto = texto.replace(/[\s-]+/g, '');
+        const match = texto.match(/^([A-Z]+)(\d+)$/);
+        if (match) {
+            return `${match[1]}-${match[2]}`;
+        }
+        return valor.toUpperCase().trim().replace(/\s+/g, '-');
+    }
+
+    function formatarNomePoco(input) {
+        input.value = formatarNomePocoInput(input.value);
+    }
+
+    function formatarDataBR(dataISO) {
+        if (!dataISO) return '';
+        const partes = dataISO.split('-');
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    // Calcula automaticamente o Tempo de Teste (HH:MM:SS) a partir do Início e Término
+    function calcularTempoTeste() {
+        const inicioVal = document.getElementById('inicio').value;
+        const terminoVal = document.getElementById('termino').value;
+        const campoTempo = document.getElementById('tempoTeste');
+
+        if (!inicioVal || !terminoVal) {
+            campoTempo.value = '';
+            return;
+        }
+
+        const [hIni, mIni] = inicioVal.split(':').map(Number);
+        const [hFim, mFim] = terminoVal.split(':').map(Number);
+
+        let minutosIni = hIni * 60 + mIni;
+        let minutosFim = hFim * 60 + mFim;
+        let diffMin = minutosFim - minutosIni;
+
+        if (diffMin < 0) {
+            diffMin += 24 * 60; // teste atravessou a meia-noite
+        }
+
+        const horas = Math.floor(diffMin / 60);
+        const minutos = diffMin % 60;
+
+        const pad = n => String(n).padStart(2, '0');
+        campoTempo.value = `${pad(horas)}:${pad(minutos)}:00`;
+    }
+
+    // Lê o logo já carregado na página e devolve os bytes em JPEG (para embutir direto no PDF)
+    function obterLogoJpeg() {
+        try {
+            const img = document.getElementById('logoImg');
+            if (!img || !img.complete || !img.naturalWidth) return null;
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+            const b64 = canvas.toDataURL('image/jpeg', 0.92).split(',')[1];
+            return { bin: atob(b64), w: canvas.width, h: canvas.height };
+        } catch (err) {
+            return null; // sem logo, o PDF continua sendo gerado normalmente
+        }
+    }
+
+    // Monta o arquivo PDF "na mão" (sem bibliotecas externas) no layout do formulário FOR-FSO-002
+    function montarPdfDhsv(d) {
+        const W = 595.28, H = 841.89, mx = 40, tw = W - 2 * mx;
+        const c = [];
+        const n = v => v.toFixed(2);
+        const medidor = document.createElement('canvas').getContext('2d');
+        const larg = (t, s, b) => { medidor.font = (b ? 'bold ' : '') + s + 'px Arial, Helvetica, sans-serif'; return medidor.measureText(t).width; };
+        const esc = s => {
+            let o = '';
+            for (const ch of String(s)) {
+                const cp = ch.codePointAt(0);
+                if (cp > 255 || cp < 32) { o += cp === 10 ? ' ' : '?'; continue; }
+                o += (ch === '(' || ch === ')' || ch === '\\') ? '\\' + ch : ch;
+            }
+            return o;
+        };
+        const rect = (x, y, w, h) => c.push(`${n(x)} ${n(H - y - h)} ${n(w)} ${n(h)} re S`);
+        const linha = (x1, y1, x2, y2) => c.push(`${n(x1)} ${n(H - y1)} m ${n(x2)} ${n(H - y2)} l S`);
+        const texto = (x, y, s, size, bold, azul) => {
+            c.push(`BT /F${bold ? 2 : 1} ${size} Tf ${azul ? '0.10 0.25 0.63 rg' : '0 g'} ${n(x)} ${n(H - y)} Td (${esc(s)}) Tj ET`);
+            c.push('0 g');
+        };
+        const centro = (cx, y, s, size, bold) => texto(cx - larg(s, size, bold) / 2, y, s, size, bold, false);
+        const quebrar = (t, size, maxW, bold) => {
+            const out = [];
+            String(t).split(/\r?\n/).forEach(par => {
+                let atual = '';
+                par.split(/\s+/).forEach(p => {
+                    const teste = atual ? atual + ' ' + p : p;
+                    if (larg(teste, size, bold) <= maxW || !atual) atual = teste;
+                    else { out.push(atual); atual = p; }
+                });
+                out.push(atual);
+            });
+            return out;
+        };
+
+        c.push('0.8 w');
+        let y = 40;
+
+        // Cabeçalho: logo | título | código/versão/data
+        const hCab = 70, wLogo = 130, wCod = 155, wTit = tw - wLogo - wCod;
+        rect(mx, y, wLogo, hCab); rect(mx + wLogo, y, wTit, hCab); rect(mx + wLogo + wTit, y, wCod, hCab);
+        if (d.logo) {
+            const maxW = wLogo - 16, maxH = hCab - 16;
+            const esc2 = Math.min(maxW / d.logo.w, maxH / d.logo.h);
+            const lw = d.logo.w * esc2, lh = d.logo.h * esc2;
+            c.push(`q ${n(lw)} 0 0 ${n(lh)} ${n(mx + (wLogo - lw) / 2)} ${n(H - y - (hCab + lh) / 2)} cm /Im1 Do Q`);
+        }
+        const titulo = quebrar('RESULTADO DO TESTE DE DHSV OPERADOR DE CAMPO', 11, wTit - 16, true);
+        titulo.forEach((t, i) => centro(mx + wLogo + wTit / 2, y + hCab / 2 + 4 - (titulo.length - 1) * 7 + i * 14, t, 11, true));
+        const xc = mx + wLogo + wTit, hs = hCab / 3;
+        linha(xc, y + hs, xc + wCod, y + hs); linha(xc, y + 2 * hs, xc + wCod, y + 2 * hs);
+        [['Código:', 'FOR-FSO-002'], ['VER.:', '00'], ['Data:', d.data]].forEach((p, i) => {
+            centro(xc + wCod / 2, y + i * hs + 10, p[0], 8, true);
+            centro(xc + wCod / 2, y + i * hs + 20, p[1], 8, false);
+        });
+        y += hCab;
+
+        // Faixa de título
+        c.push(`0.94 g ${n(mx)} ${n(H - y - 20)} ${n(tw)} 20 re f 0 g`);
+        rect(mx, y, tw, 20);
+        centro(mx + tw / 2, y + 14, 'Resultado do teste de DHSV', 10, true);
+        y += 20;
+
+        const wLab = 170, wVal = tw - wLab;
+        const linhaSimples = (label, valor, hMin, maxLinhas) => {
+            let ls = quebrar(valor || '-', 9.5, wVal - 12, true);
+            if (maxLinhas && ls.length > maxLinhas) { ls = ls.slice(0, maxLinhas); ls[maxLinhas - 1] += '...'; }
+            const h = Math.max(hMin || 24, ls.length * 12 + 12);
+            rect(mx, y, wLab, h); rect(mx + wLab, y, wVal, h);
+            texto(mx + 6, y + 15, label, 9.5, true, false);
+            ls.forEach((t, i) => texto(mx + wLab + 6, y + 15 + i * 12, t, 9.5, true, true));
+            y += h;
+        };
+        const linhaCheck = (label, opcoes, marcadas) => {
+            const h = 28;
+            rect(mx, y, wLab, h); rect(mx + wLab, y, wVal, h);
+            texto(mx + 6, y + 17, label, 9.5, true, false);
+            opcoes.forEach((op, i) => {
+                const bx = mx + wLab + 14 + i * 110, by = y + 9;
+                rect(bx, by, 10, 10);
+                if (marcadas.indexOf(op) !== -1) { linha(bx + 1.5, by + 1.5, bx + 8.5, by + 8.5); linha(bx + 8.5, by + 1.5, bx + 1.5, by + 8.5); }
+                texto(bx + 15, by + 8.5, op, 9.5, false, false);
+            });
+            y += h;
+        };
+
+        linhaSimples('Operador', d.operador);
+        linhaSimples('Matrícula', d.matricula);
+        linhaSimples('Poço', d.poco);
+        linhaSimples('Método', d.metodo);
+        linhaCheck('Fluido', ['LÍQUIDO', 'GÁS'], d.fluido);
+        linhaSimples('Data', d.data);
+        linhaSimples('Hora início', d.inicio);
+        linhaSimples('Hora fim', d.termino);
+        linhaSimples('Tempo de teste (minutos)', d.tempo + '    minutos de teste');
+        linhaSimples('Diferencial de pressão (PSI)', d.diferencial);
+        linhaCheck('Teste foi aprovado?', ['SIM', 'NÃO'], d.aprovado ? ['SIM'] : ['NÃO']);
+        linhaSimples('Observação', d.observacao, 70, Math.max(1, Math.floor((H - 40 - y - 12) / 12)));
+
+        const conteudo = c.join('\n');
+        const obj = [];
+        obj[1] = '<< /Type /Catalog /Pages 2 0 R >>';
+        obj[2] = '<< /Type /Pages /Kids [3 0 R] /Count 1 >>';
+        obj[3] = `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 5 0 R /F2 6 0 R >>${d.logo ? ' /XObject << /Im1 7 0 R >>' : ''} >> /Contents 4 0 R >>`;
+        obj[4] = `<< /Length ${conteudo.length} >>\nstream\n${conteudo}\nendstream`;
+        obj[5] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+        obj[6] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+        if (d.logo) obj[7] = `<< /Type /XObject /Subtype /Image /Width ${d.logo.w} /Height ${d.logo.h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${d.logo.bin.length} >>\nstream\n${d.logo.bin}\nendstream`;
+
+        let pdf = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';
+        const offs = [];
+        for (let i = 1; i < obj.length; i++) { offs[i] = pdf.length; pdf += `${i} 0 obj\n${obj[i]}\nendobj\n`; }
+        const xref = pdf.length;
+        pdf += `xref\n0 ${obj.length}\n0000000000 65535 f \n`;
+        for (let i = 1; i < obj.length; i++) pdf += String(offs[i]).padStart(10, '0') + ' 00000 n \n';
+        pdf += `trailer\n<< /Size ${obj.length} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+
+        const bytes = new Uint8Array(pdf.length);
+        for (let i = 0; i < pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 255;
+        return bytes;
+    }
+
+    // Gera o arquivo PDF e baixa direto no aparelho (sem pop-up e sem depender de internet)
+    function gerarPDFDhsv() {
+        const form = document.getElementById('dhsvForm');
+        if (!form.checkValidity()) {
+            alert('Por favor, preencha todos os campos obrigatórios antes de gerar o PDF!');
+            form.reportValidity();
+            return;
+        }
+
+        const inputPoco = document.getElementById('nomePoco');
+        const nomePoco = formatarNomePocoInput(inputPoco.value);
+        inputPoco.value = nomePoco;
+
+        const tipoFluido = document.getElementById('tipoFluido').value;
+        const fluido = [];
+        if (tipoFluido === 'Líquido' || tipoFluido === 'Gás e Líquido') fluido.push('LÍQUIDO');
+        if (tipoFluido === 'Gás' || tipoFluido === 'Gás e Líquido') fluido.push('GÁS');
+        const dif = document.getElementById('diferencialPressao').value.trim();
+
+        try {
+            const bytes = montarPdfDhsv({
+                operador: document.getElementById('operador').value,
+                matricula: document.getElementById('matricula').value,
+                poco: nomePoco,
+                metodo: document.getElementById('metodoPocoDhsv').value,
+                fluido: fluido,
+                data: formatarDataBR(document.getElementById('data').value),
+                inicio: document.getElementById('inicio').value,
+                termino: document.getElementById('termino').value,
+                tempo: document.getElementById('tempoTeste').value || '-',
+                diferencial: dif !== '' ? dif : '-',
+                aprovado: document.getElementById('resultadoTeste').value.indexOf('Não Conforme') === -1,
+                observacao: document.getElementById('observacaoDhsv').value || '-',
+                logo: obterLogoJpeg()
+            });
+
+            const blob = new Blob([bytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Teste_DHSV_${nomePoco}_${document.getElementById('data').value}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+        } catch (err) {
+            alert('Erro ao gerar o PDF: ' + err.message);
+        }
+    }
+
+    // Geração dos Textos para Envio
+    function gerarTexto(tipo) {
+        if (tipo === 'dhsv') {
+            const inputPoco = document.getElementById('nomePoco');
+            const nomePoco = formatarNomePocoInput(inputPoco.value);
+            inputPoco.value = nomePoco;
+
+            const operador = document.getElementById('operador').value;
+            const matricula = document.getElementById('matricula').value;
+            const data = formatarDataBR(document.getElementById('data').value);
+            const inicio = document.getElementById('inicio').value;
+            const termino = document.getElementById('termino').value;
+            const tempoTeste = document.getElementById('tempoTeste').value;
+            const statusPoco = document.getElementById('statusPoco').value;
+            const metodoPocoDhsv = document.getElementById('metodoPocoDhsv').value;
+            const tipoFluido = document.getElementById('tipoFluido').value;
+            const diferencialPressao = document.getElementById('diferencialPressao').value.trim();
+            const observacaoDhsv = document.getElementById('observacaoDhsv').value;
+
+            const pressaoColuna = document.getElementById('pressaoColuna').value;
+            const pressaoAnularA = document.getElementById('pressaoAnularA').value;
+            const inputAnularB = document.getElementById('pressaoAnularB').value.trim();
+            const pressaoAnularB = inputAnularB !== '' ? `${inputAnularB} PSI` : '';
+            
+            const pressaoLinhaDHSV = document.getElementById('pressaoLinhaDHSV').value;
+            const estabilizacaoMin = document.getElementById('estabilizacaoMin').value;
+            
+            const recirculacao = document.getElementById('recirculacao').checked ? 'Sim (Fechamento da DHSV) - Sim / Pressão da bomba 0 psi / Pressão da linha 0' : 'Não';
+            const drenarTrecho = document.getElementById('drenarTrecho').checked ? 'Sim - 0 psi' : 'Não';
+            
+            const acrescinopressao = document.getElementById('acrescinopressao').value;
+            const pressurizarLinha = document.getElementById('pressurizarLinha').checked ? 'Sim' : 'Não';
+            
+            const pressaoBomba = document.getElementById('pressaoBomba').value;
+            const codigoTag = document.getElementById('codigoTag').value;
+            const dataCalibracao = formatarDataBR(document.getElementById('dataCalibracao').value);
+            const vencimentoCalibracao = formatarDataBR(document.getElementById('vencimentoCalibracao').value);
+            
+            const resultadoTeste = document.getElementById('resultadoTeste').value;
+            const checklist = document.getElementById('checklist').checked ? 'Check-list respondido e devolvido ✅' : 'Check-list PENDENTE ❌';
+
+            return `*Seguem os dados do Teste de DHSV - ${nomePoco}:* 👇\n\n` +
+                `*Operador:* ${operador}\n` +
+                `*Matrícula:* ${matricula}\n` +
+                `*Data:* ${data}\n` +
+                `*Início do teste:* ${inicio}\n` +
+                `*Término do teste:* ${termino}\n` +
+                `*Tempo de teste:* ${tempoTeste}\n` +
+                `*Status do poço:* ${statusPoco}\n` +
+                `*Método do poço:* ${metodoPocoDhsv}\n` +
+                `*Tipo de fluido:* ${tipoFluido}\n\n` +
+                `*Registro da pressão da cabeça/ anulares inicial:*\n` +
+                `• *Pressão da coluna:* ${pressaoColuna} PSI\n` +
+                `• *Pressão do anular A:* ${pressaoAnularA} PSI\n` +
+                `• *Pressão do anular B:* ${pressaoAnularB}\n\n` +
+                `*Registrar Pressão de linha da DHSV:* ${pressaoLinhaDHSV} PSI\n` +
+                `*Registrar pressão de estabilização em minutos:* ${estabilizacaoMin} min\n` +
+                `*Abrir recirculação da bomba:* ${recirculacao}\n` +
+                `*Drenar trecho entre a DHSV e os bloqueios:* ${drenarTrecho}\n` +
+                `*Acompanhar acréscimo da pressão em no mínimo 30 minutos:* ${acrescinopressao}\n` +
+                `*Pressurizar linha da DHSV lentamente até equalização:* ${pressurizarLinha}\n` +
+                `*Registrar valor da pressão na bomba:* ${pressaoBomba} PSI\n\n` +
+                `*Código/tag:* ${codigoTag}\n` +
+                `*Data de calibração:* ${dataCalibracao}\n` +
+                `*Data de vencimento da calibração:* ${vencimentoCalibracao}\n\n` +
+                `*Diferencial de pressão:* ${diferencialPressao !== '' ? diferencialPressao + ' PSI' : 'N/A'}\n` +
+                `* *Resultado do teste:* ${resultadoTeste}\n` +
+                `* ${checklist}` +
+                (observacaoDhsv ? `\n\n*Observação:*\n${observacaoDhsv}` : '');
+        }
+
+        if (tipo === 'falha') {
+            const inputPoco = document.getElementById('falhaPoco');
+            const poco = formatarNomePocoInput(inputPoco.value);
+            inputPoco.value = poco;
+
+            const data = formatarDataBR(document.getElementById('falhaData').value);
+            const hora = document.getElementById('falhaHora').value;
+            const componente = document.getElementById('falhaComponente').value;
+            const nd = id => document.getElementById(id).value.trim() || 'N/D';
+            const descricao = document.getElementById('falhaDescricao').value;
+            const acao = document.getElementById('falhaAcao').value;
+
+            return `*⚠️ REGISTRO DE FALHA ENCONTRADA - ${poco}* ⚠️\n\n` +
+                `*Data:* ${data} às ${hora}\n` +
+                `*Componente afetado:* ${componente}\n\n` +
+                `*Especificações do componente:*\n` +
+                `• *Classe de pressão:* ${nd('falhaClassePressao')}\n` +
+                `• *Diâmetro:* ${nd('falhaDiametro')}\n` +
+                `• *Tipo:* ${nd('falhaTipo')}\n` +
+                `• *Fabricante:* ${nd('falhaFabricante')}\n` +
+                `• *Status:* ${nd('falhaStatus')}\n\n` +
+                `*Descrição da Falha:*\n${descricao}\n\n` +
+                `*Ação Tomada / Recomendação:*\n${acao}`;
+        }
+
+        if (tipo === 'tarefas') {
+            const totais = calcularTotaisTarefas();
+            let texto = `*🗓️ TAREFAS REALIZADAS*\n`;
+            for (let dia = 1; dia <= QTD_DIAS_TAREFAS; dia++) {
+                const data = formatarDataBR(document.getElementById('tarefaData' + dia).value);
+                texto += `\n*Dia ${dia} (${data}):*\n`;
+                TIPOS_TAREFA.forEach(t => {
+                    texto += `• ${t.nome}: ${valorTarefa(dia, t.id)}\n`;
+                });
+            }
+            texto += `\n*TOTAL DOS ${QTD_DIAS_TAREFAS} DIAS:*\n`;
+            TIPOS_TAREFA.forEach(t => {
+                texto += `• ${t.nome}: ${totais[t.id]}\n`;
+            });
+            texto += `• *Total geral:* ${totais.geral}`;
+            const pendentes = document.getElementById('tarefasPendentes').value.trim();
+            const motivo = document.getElementById('motivoPendencias').value.trim();
+            if (pendentes || motivo) {
+                texto += `\n\n*TAREFAS PENDENTES:*\n${pendentes || 'N/D'}`;
+                texto += `\n\n*Motivo das pendências:*\n${motivo || 'N/D'}`;
+            }
+            return texto;
+        }
+    }
+
+    // ---- Aba Tarefas Realizadas ----
+    const QTD_DIAS_TAREFAS = 5;
+    const TIPOS_TAREFA = [
+        { id: 'checklist', nome: 'Checklist', total: 'totalChecklist' },
+        { id: 'acompanhamento', nome: 'Acompanhamentos diários', total: 'totalAcompanhamento' },
+        { id: 'dhsv', nome: 'Testes de DHSV', total: 'totalDhsv' },
+        { id: 'outras', nome: 'Outras tarefas', total: 'totalOutras' }
+    ];
+
+    function valorTarefa(dia, tipoId) {
+        const v = parseInt(document.getElementById(`tarefa_${tipoId}_${dia}`).value, 10);
+        return isNaN(v) ? 0 : v;
+    }
+
+    function calcularTotaisTarefas() {
+        const totais = { geral: 0 };
+        TIPOS_TAREFA.forEach(t => {
+            let soma = 0;
+            for (let dia = 1; dia <= QTD_DIAS_TAREFAS; dia++) soma += valorTarefa(dia, t.id);
+            totais[t.id] = soma;
+            totais.geral += soma;
+        });
+        return totais;
+    }
+
+    function atualizarTotaisTarefas() {
+        const totais = calcularTotaisTarefas();
+        TIPOS_TAREFA.forEach(t => {
+            document.getElementById(t.total).textContent = totais[t.id];
+        });
+        document.getElementById('totalGeral').textContent = totais.geral;
+    }
+
+    // Ao escolher a data do Dia 1, sugere automaticamente os dias seguintes (editáveis)
+    function preencherDatasTarefas() {
+        const base = document.getElementById('tarefaData1').value;
+        if (!base) return;
+        const [ano, mes, dia] = base.split('-').map(Number);
+        for (let n = 2; n <= QTD_DIAS_TAREFAS; n++) {
+            const campo = document.getElementById('tarefaData' + n);
+            if (campo.value && campo.dataset.auto !== '1') continue; // respeita datas digitadas manualmente
+            campo.value = new Date(Date.UTC(ano, mes - 1, dia + n - 1)).toISOString().slice(0, 10);
+            campo.dataset.auto = '1';
+        }
+    }
+
+    const FORMS_POR_TIPO = { dhsv: 'dhsvForm', falha: 'falhaForm', tarefas: 'tarefasForm' };
+
+    function enviarWhatsApp(tipo) {
+        const form = document.getElementById(FORMS_POR_TIPO[tipo]);
+
+        if (!form.checkValidity()) {
+            alert('Por favor, preencha todos os campos obrigatórios!');
+            form.reportValidity();
+            return;
+        }
+
+        const texto = gerarTexto(tipo);
+        const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
+        window.open(url, '_blank');
+    }
+
+    function copiarTexto(tipo) {
+        const form = document.getElementById(FORMS_POR_TIPO[tipo]);
+
+        if (!form.checkValidity()) {
+            alert('Por favor, preencha todos os campos obrigatórios!');
+            form.reportValidity();
+            return;
+        }
+
+        const texto = gerarTexto(tipo);
+        navigator.clipboard.writeText(texto).then(() => {
+            alert('Relatório copiado com sucesso!');
+        }).catch(err => {
+            alert('Erro ao copiar texto: ' + err);
+        });
+    }
+</script>
+
+</body>
+</html>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
